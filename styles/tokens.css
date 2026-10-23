@@ -1,0 +1,44 @@
+/* Design tokens: ivory, black and gold. Every other stylesheet reads from these. */
+:root {
+  --ivory: #f6f2ea;
+  --ivory-2: #eee7da;
+  --ivory-3: #fbf6ea;
+  --white: #ffffff;
+  --black: #0e0e0f;
+  --ink: #141414;
+  --ink-2: #4f4a42;
+  --ink-3: #6b645a;
+
+  --gold: #c9a45c;
+  --gold-deep: #b08a3e;
+  --gold-text: #8a6a1f;
+  --gold-pale: #e8d5a6;
+  --gold-line: #5a4a26;
+
+  --line: #e3dace;
+  --line-2: #d6cbb6;
+  --line-3: #c9bda5;
+
+  --danger: #8a2b1f;
+  --dark-muted: #b9b0a0;
+  --dark-line: #2a2620;
+
+  --font-display: var(--font-barlow-condensed), "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: var(--font-barlow), "Barlow", system-ui, sans-serif;
+  --font-serif: var(--font-bodoni), "Bodoni Moda", Georgia, serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
+
+  --container: 1320px;
+  --gutter: 24px;
+  --nav-h: 80px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-io: cubic-bezier(0.77, 0, 0.18, 1);
+  --shadow-lift: 0 30px 60px -30px rgba(20, 20, 20, 0.35);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 16px;
+    --nav-h: 68px;
+  }
+}

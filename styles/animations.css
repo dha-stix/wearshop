@@ -1,0 +1,162 @@
+/* Keyframes and motion helpers shared across the site. */
+@keyframes ws-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ws-shine {
+  from {
+    transform: translateX(-120%) skewX(-20deg);
+  }
+  to {
+    transform: translateX(420%) skewX(-20deg);
+  }
+}
+@keyframes ws-rise {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ws-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ws-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ws-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 164, 92, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(201, 164, 92, 0);
+  }
+}
+@keyframes ws-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(-5deg);
+  }
+}
+@keyframes ws-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes ws-skeleton {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes ws-grow-y {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes ws-fill-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes ws-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes ws-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Watch hands: the Watch SVG uses a 200x260 viewBox centred on (100,130). */
+.watch-sec {
+  transform-origin: 100px 130px;
+  animation: ws-spin 60s steps(60) infinite;
+}
+.watch-min {
+  transform-origin: 100px 130px;
+  animation: ws-spin 3600s linear infinite;
+}
+
+.float {
+  animation: ws-float 7s ease-in-out infinite;
+}
+.orbit {
+  animation: ws-spin 60s linear infinite;
+}
+.orbit--reverse {
+  animation: ws-spin 90s linear infinite reverse;
+}
+
+.rise {
+  animation: ws-rise 0.9s var(--ease) both;
+}
+.rise-1 {
+  animation-delay: 0.1s;
+}
+.rise-2 {
+  animation-delay: 0.25s;
+}
+.rise-3 {
+  animation-delay: 0.4s;
+}
+
+/* Scroll reveal: <Reveal> adds .is-visible when the element enters the viewport. */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
