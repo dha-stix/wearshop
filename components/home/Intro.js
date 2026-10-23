@@ -12,6 +12,8 @@ export default function Intro({ onDone }) {
   useEffect(() => {
     const timer = setTimeout(onDone, INTRO_MS);
     const onKey = (e) => e.key === "Escape" && onDone();
+    // The intro's own curtains now cover the page, so drop the pre-paint black cover.
+    document.documentElement.classList.remove("intro-pending");
     document.documentElement.classList.add("intro-lock");
     window.addEventListener("keydown", onKey);
     return () => {

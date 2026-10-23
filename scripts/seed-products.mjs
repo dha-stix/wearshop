@@ -1,33 +1,56 @@
-// Adds a few sample watches so the storefront has something to show while you test.
-// They have no photos (the site draws a watch instead) and are tagged sample: true.
-// Delete them from the manager dashboard before launch.
+// Loads the starter catalogue (lib/catalog-data.json + photos in images/products) into Firebase:
+// uploads each photo to Storage and creates the product in Firestore.
+// Safe to re-run: products are keyed by their catalogue id, so nothing is duplicated.
 // Usage: npm run seed
-import { FieldValue } from "firebase-admin/firestore";
+import { readFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import path from "node:path";
+import { FieldValue, Timestamp } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 import { db } from "./admin.mjs";
 
-const SAMPLES = [
-  { name: "Obsidian Gold", category: "dress", price: 1680, stock: 6, movement: "Automatic", strap: "Steel bracelet", caseSize: 41, waterResistance: "50m", featured: true },
-  { name: "Sentinel Chrono", category: "chronograph", price: 1250, stock: 2, movement: "Automatic", strap: "Leather", caseSize: 42, waterResistance: "100m" },
-  { name: "Meridian GMT", category: "travel", price: 1890, stock: 5, movement: "Automatic", strap: "Steel bracelet", caseSize: 40, waterResistance: "100m" },
-  { name: "Vanguard Diver", category: "diver", price: 980, stock: 1, movement: "Automatic", strap: "Rubber", caseSize: 43, waterResistance: "300m" },
-  { name: "Regent Dress", category: "dress", price: 1420, stock: 8, movement: "Manual wind", strap: "Leather", caseSize: 39, waterResistance: "30m" },
-  { name: "Ironclad Field", category: "field", price: 640, stock: 12, movement: "Quartz", strap: "Canvas", caseSize: 40, waterResistance: "100m" },
-];
+const bucketName = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
+if (!bucketName) {
+  console.error("Missing NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET in .env.local.");
+  process.exit(1);
+}
+const bucket = getStorage().bucket(bucketName);
+const root = path.resolve(import.meta.dirname, "..");
+const catalog = JSON.parse(await readFile(path.join(root, "lib/catalog-data.json"), "utf8"));
 
-const batch = db.batch();
-for (const s of SAMPLES) {
-  batch.set(db.collection("products").doc(), {
-    ...s,
-    crystal: "Sapphire",
-    description: `${s.name} — a ${s.caseSize}mm ${s.movement.toLowerCase()} ${s.category} watch. Sample listing: replace with your own photos and copy.`,
-    images: [],
+async function uploadImage(productId, file) {
+  const destination = `products/${productId}/${file}`;
+  const token = randomUUID();
+  await bucket.upload(path.join(root, "images/products", file), {
+    destination,
+    metadata: {
+      contentType: file.endsWith(".webp") ? "image/webp" : "image/jpeg",
+      cacheControl: "public, max-age=31536000",
+      metadata: { firebaseStorageDownloadToken: token },
+    },
+  });
+  const url = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(destination)}?alt=media&token=${token}`;
+  return { url, path: destination };
+}
+
+const startedAt = Date.now();
+let created = 0;
+for (const [i, item] of catalog.entries()) {
+  const ref = db.collection("products").doc(item.id);
+  if ((await ref.get()).exists) continue;
+  const images = [];
+  for (const file of item.images) images.push(await uploadImage(item.id, file));
+  const { images: _files, credit: _credit, ...fields } = item;
+  await ref.set({
+    ...fields,
+    images,
     sold: 0,
     status: "live",
-    featured: Boolean(s.featured),
-    sample: true,
-    createdAt: FieldValue.serverTimestamp(),
+    // Keep the catalogue order: first item is the newest.
+    createdAt: Timestamp.fromMillis(startedAt - i * 3600000),
     updatedAt: FieldValue.serverTimestamp(),
   });
+  created++;
+  process.stdout.write(`\r${i + 1}/${catalog.length} ${item.name.padEnd(40)}`);
 }
-await batch.commit();
-console.log(`Added ${SAMPLES.length} sample products.`);
+console.log(`\nDone. Added ${created} products (${catalog.length - created} already existed).`);

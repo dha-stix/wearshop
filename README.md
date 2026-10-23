@@ -30,6 +30,20 @@ scripts/                 Admin scripts: seed sample products, promote a manager
 firestore.rules, storage.rules, firestore.indexes.json
 ```
 
+## Demo mode (before Firebase is connected)
+
+Until `.env.local` has Firebase keys, the site runs in **demo mode**:
+
+- The shop shows the 90-watch starter catalogue from `lib/catalog-data.json`, with photos in `images/products/`.
+- Sign-in offers **Continue as demo customer** and **Continue as demo manager** instead of Google.
+- Checkout goes to a simulated Bachs page (`/checkout/demo-pay`). No card is charged.
+- Orders, stock, notifications and product uploads are saved in your browser's localStorage, with a year of sample sales so the revenue chart has data.
+- The **Demo mode** pill at the bottom of the screen switches accounts and resets the demo data.
+
+As soon as the Firebase keys are added, demo mode turns off and the site uses Firebase and Bachs. Run `npm run seed` to load the same catalogue and photos into Firebase.
+
+The starter photos are from [Unsplash](https://unsplash.com) (free Unsplash License); each product's photographer is listed under `credit` in `lib/catalog-data.json`. Some photos show real watch brands' logos, so replace them with your own product photos before launch.
+
 ## 1. Firebase setup
 
 1. Create a project at [console.firebase.google.com](https://console.firebase.google.com).
@@ -83,13 +97,13 @@ npm run make-manager -- you@gmail.com
 
 Reload `/dashboard` to see the manager view. You can also set `role: "manager"` on your `users/{uid}` document in the Firestore console.
 
-### Sample products (optional)
+### Load the starter catalogue
 
 ```bash
 npm run seed
 ```
 
-This adds six sample watches without photos (the site draws a watch in their place). Delete them from the manager dashboard before launch.
+This uploads the 90 starter watches and their photos to Firebase Storage and Firestore. It's safe to run again; existing products are skipped.
 
 ## How payments flow
 

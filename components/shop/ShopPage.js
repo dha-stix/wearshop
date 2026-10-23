@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ProductCard from "@/components/ui/ProductCard";
+import LoadMore, { usePaged } from "@/components/ui/LoadMore";
 import Reveal from "@/components/ui/Reveal";
 import { EmptyState, SkeletonGrid } from "@/components/ui/States";
 import { useProducts } from "@/components/providers/ProductsProvider";
@@ -40,6 +41,9 @@ export default function ShopPage() {
       .filter((p) => !filters.inStock || p.stock > 0)
       .sort(SORTS[sort].fn);
   }, [products, category, filters, sort]);
+
+  // 20 watches at a time; starts over whenever the results change.
+  const paged = usePaged(visible, 20, JSON.stringify([category, filters, sort]));
 
   const pickCategory = (id) => router.replace(id === "all" ? "/shop" : `/shop?category=${id}`, { scroll: false });
   const activeName = CATEGORIES.find((c) => c.id === category)?.name;
@@ -89,7 +93,7 @@ export default function ShopPage() {
         <div className="shop-results">
           <div className="row row--between row--center shop-results__bar">
             <span className="label">
-              {loading ? "Loading watches" : `Showing ${visible.length} ${visible.length === 1 ? "watch" : "watches"}`}
+              {loading ? "Loading watches" : `${visible.length} ${visible.length === 1 ? "watch" : "watches"}`}
             </span>
             <button type="button" className="btn btn--outline btn--sm shop-filter-toggle" onClick={() => setFiltersOpen(true)}>
               Filters
@@ -100,13 +104,16 @@ export default function ShopPage() {
           ) : error ? (
             <div className="notice notice--error">We couldn't load the collection. Refresh to try again.</div>
           ) : visible.length ? (
-            <div className="grid-auto">
-              {visible.map((p, i) => (
-                <Reveal key={p.id} delay={(i % 3) * 0.06}>
-                  <ProductCard product={p} />
-                </Reveal>
-              ))}
-            </div>
+            <>
+              <div className="grid-auto">
+                {paged.page.map((p, i) => (
+                  <Reveal key={p.id} delay={(i % 3) * 0.06}>
+                    <ProductCard product={p} />
+                  </Reveal>
+                ))}
+              </div>
+              <LoadMore paged={paged} noun="watches" />
+            </>
           ) : (
             <div className="panel">
               <EmptyState title={products.length ? "No watches match" : "The vault is being stocked"}>

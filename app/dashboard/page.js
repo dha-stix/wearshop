@@ -1,16 +1,9 @@
-import { Suspense } from "react";
-import RequireAuth from "@/components/auth/RequireAuth";
-import DashboardPage from "@/components/dashboard/DashboardPage";
-import { PageLoading } from "@/components/ui/States";
+import { RolePage } from "@/components/dashboard/DashboardLayout";
+import ManagerOverview from "@/components/dashboard/manager/ManagerOverview";
+import CustomerOverview from "@/components/dashboard/customer/CustomerOverview";
 
 export const metadata = { title: "Dashboard" };
 
-export default function Dashboard() {
-  return (
-    <RequireAuth>
-      <Suspense fallback={<PageLoading />}>
-        <DashboardPage />
-      </Suspense>
-    </RequireAuth>
-  );
+export default function DashboardHome() {
+  return <RolePage manager={<ManagerOverview />} customer={<CustomerOverview />} />;
 }

@@ -2,45 +2,68 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Icon from "@/components/ui/Icon";
 import Logo from "@/components/ui/Logo";
 import { useAuth } from "@/components/providers/AuthProvider";
 
 // Black sidebar + ivory content frame shared by the customer and manager dashboards.
-// nav: [{ id, label, icon, badge }] — ids are section anchors on the page.
+// nav: [{ href, label, icon, badge, exact, match }] — each item is its own page under /dashboard.
 export default function DashboardShell({ nav, role, children }) {
   const { user, profile, signOut } = useAuth();
-  const [active, setActive] = useState(nav[0]?.id);
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const isActive = (item) =>
+    item.match ? item.match(pathname) : item.exact ? pathname === item.href : pathname.startsWith(item.href);
 
-  // Highlight the section currently in view.
+  // Close the mobile drawer whenever the page changes.
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  // Lock page scroll and allow Escape while the mobile menu is open.
   useEffect(() => {
-    const sections = nav.map((n) => document.getElementById(n.id)).filter(Boolean);
-    const io = new IntersectionObserver(
-      (entries) => {
-        const top = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-        if (top) setActive(top.target.id);
-      },
-      { rootMargin: "-20% 0px -60% 0px" }
-    );
-    sections.forEach((s) => io.observe(s));
-    return () => io.disconnect();
-  }, [nav]);
+    if (!menuOpen) return;
+    const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
 
   return (
     <div className="dash">
-      <aside className="dash__side">
+      <aside className={`dash__side ${menuOpen ? "dash__side--open" : ""}`}>
         <div className="dash__brand">
           <Logo dark size={24} />
           {role && <span className="dash__role">{role}</span>}
+          <button
+            type="button"
+            className="icon-btn dash__menu-btn"
+            aria-label="Open menu"
+            aria-expanded={menuOpen}
+            aria-controls="dash-menu"
+            onClick={() => setMenuOpen(true)}
+          >
+            <Icon name="menu" size={24} />
+          </button>
         </div>
+        <button type="button" className="dash__scrim" tabIndex={-1} aria-label="Close menu" onClick={() => setMenuOpen(false)} />
+        <div id="dash-menu" className="dash__menu">
+          <div className="dash__menu-head">
+            <Logo dark size={22} />
+            <button type="button" className="icon-btn" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+              <Icon name="close" size={22} />
+            </button>
+          </div>
         <nav className="dash__nav" aria-label="Dashboard">
           {nav.map((item) => (
-            <a key={item.id} href={`#${item.id}`} aria-current={active === item.id ? "true" : undefined}>
+            <Link key={item.href} href={item.href} aria-current={isActive(item) ? "page" : undefined}>
               <Icon name={item.icon} size={18} />
               {item.label}
               {item.badge > 0 && <span className="dash__badge">{item.badge}</span>}
-            </a>
+            </Link>
           ))}
           <Link href="/shop">
             <Icon name="external" size={18} />
@@ -59,16 +82,22 @@ export default function DashboardShell({ nav, role, children }) {
             <Icon name="logout" size={18} />
           </button>
         </div>
+        </div>
       </aside>
       <div className="dash__main">{children}</div>
     </div>
   );
 }
 
-export function DashHeader({ eyebrow, title, accent, actions }) {
+export function DashHeader({ eyebrow, title, accent, actions, back }) {
   return (
     <header className="dash__header rise">
       <div>
+        {back && (
+          <Link href={back.href} className="back-link">
+            <Icon name="arrow-left" size={16} /> {back.label}
+          </Link>
+        )}
         <p className="eyebrow">{eyebrow}</p>
         <h1 className="title">
           {title} {accent && <span className="serif-accent">{accent}</span>}

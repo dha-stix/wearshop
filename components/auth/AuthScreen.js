@@ -7,7 +7,7 @@ import Icon, { GoogleMark } from "@/components/ui/Icon";
 import Logo from "@/components/ui/Logo";
 import Watch from "@/components/ui/Watch";
 import { useAuth } from "@/components/providers/AuthProvider";
-import { isFirebaseConfigured } from "@/lib/firebase";
+import { isDemoMode, signInAsDemo } from "@/lib/firebase-actions";
 
 const COPY = {
   login: {
@@ -102,16 +102,28 @@ export default function AuthScreen({ mode }) {
           <h1 className="auth__title">{copy.title}</h1>
           <p className="lead auth__body">{copy.body}</p>
 
-          {!isFirebaseConfigured && (
-            <p className="notice notice--error" style={{ marginBottom: 16 }}>
-              Sign-in isn&apos;t available yet: the store&apos;s Firebase keys haven&apos;t been added.
-            </p>
+          {isDemoMode ? (
+            <div className="demo-signin">
+              <p className="notice" style={{ marginBottom: 16 }}>
+                <Icon name="alert" size={18} className="gold-icon" />
+                <span>
+                  <strong>Demo mode.</strong> Firebase isn&apos;t connected yet, so Google sign-in is off. Try the store with a demo
+                  account. Everything is saved in this browser only, and payments are simulated.
+                </span>
+              </p>
+              <button type="button" className="btn btn--dark btn--block" onClick={() => signInAsDemo("customer")}>
+                <Icon name="user" size={18} /> Continue as demo customer
+              </button>
+              <button type="button" className="btn btn--gold btn--block" onClick={() => signInAsDemo("manager")}>
+                <Icon name="grid" size={18} /> Continue as demo manager
+              </button>
+            </div>
+          ) : (
+            <button type="button" className="btn btn--dark btn--block auth__google" onClick={handleGoogle} disabled={busy}>
+              <GoogleMark />
+              {busy ? "Opening Google…" : copy.button}
+            </button>
           )}
-
-          <button type="button" className="btn btn--dark btn--block auth__google" onClick={handleGoogle} disabled={busy || !isFirebaseConfigured}>
-            <GoogleMark />
-            {busy ? "Opening Google…" : copy.button}
-          </button>
           {error && (
             <p className="field__error" role="alert" style={{ marginTop: 12 }}>
               {error}

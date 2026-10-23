@@ -8,21 +8,19 @@ import Logo from "@/components/ui/Logo";
 import Icon from "@/components/ui/Icon";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useCart } from "@/components/providers/CartProvider";
-import { useNotifications } from "@/lib/hooks";
+import NotificationBell from "@/components/orders/NotificationBell";
 
 const LINKS = [
   { href: "/shop", label: "Shop" },
   { href: "/#collections", label: "Collections" },
   { href: "/#craft", label: "Craft" },
-  { href: "/dashboard", label: "Track order" },
+  { href: "/dashboard/orders", label: "Track order" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const { user, signOut } = useAuth();
   const { count } = useCart();
-  const { data: notes } = useNotifications(user?.uid || null);
-  const unread = notes.filter((n) => !n.read).length;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -60,12 +58,7 @@ export default function Navbar() {
           <Link href="/shop" className="icon-btn" aria-label="Search watches">
             <Icon name="search" />
           </Link>
-          {user && (
-            <Link href="/dashboard#notifications" className="icon-btn" aria-label={`Notifications${unread ? `, ${unread} unread` : ""}`}>
-              <Icon name="bell" />
-              {unread > 0 && <span className="count-dot">{unread}</span>}
-            </Link>
-          )}
+          <NotificationBell />
           <Link href="/cart" className="icon-btn" aria-label={`Cart, ${count} items`}>
             <Icon name="cart" />
             {count > 0 && <span className="count-dot">{count}</span>}

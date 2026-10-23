@@ -426,3 +426,66 @@
   margin: 16px auto 32px;
   max-width: 480px;
 }
+
+/* ---------- Demo payment (stands in for Bachs) ---------- */
+.demo-pay {
+  display: grid;
+  place-items: center;
+  min-height: 70vh;
+  padding: 48px var(--gutter);
+}
+.demo-pay__card {
+  width: 100%;
+  max-width: 440px;
+  padding: 36px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-lift);
+}
+.demo-pay__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: var(--gold-text);
+}
+.demo-pay__amount {
+  margin: 8px 0;
+  font-family: var(--font-mono);
+  font-size: 40px;
+}
+.demo-pay__card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 24px 0 8px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-3);
+  background: var(--ivory-3);
+}
+.demo-pay .btn--block + .btn--block {
+  margin-top: 10px;
+}
+.demo-pay .field__hint {
+  margin-bottom: 20px;
+}
+
+/* ---------- Load more ---------- */
+.load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 48px;
+}
+.load-more__bar {
+  width: min(240px, 100%);
+  height: 2px;
+  background: var(--line);
+}
+.load-more__bar span {
+  display: block;
+  height: 2px;
+  background: var(--gold-deep);
+  transition: width 0.6s var(--ease);
+}

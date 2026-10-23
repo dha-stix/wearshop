@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@/components/ui/Icon";
 import ProductCard from "@/components/ui/ProductCard";
 import ProductVisual from "@/components/ui/ProductVisual";
@@ -24,6 +24,10 @@ export default function ProductDetail({ id }) {
   const toast = useToast();
   const [shot, setShot] = useState(0);
   const [qty, setQty] = useState(1);
+
+  useEffect(() => {
+    if (product?.name) document.title = `${product.name} · WearShop`;
+  }, [product?.name]);
 
   if (loading) return <PageLoading />;
   if (!product || product.status === "draft") {

@@ -73,7 +73,7 @@ export default function CheckoutSuccess() {
             : "Hold on while we confirm your payment with Bachs. This usually takes a few seconds."}
       </p>
       <div className="row" style={{ justifyContent: "center" }}>
-        <Link href={`/dashboard?order=${orderId}`} className="btn btn--dark">
+        <Link href={`/dashboard/orders/${orderId}`} className="btn btn--dark">
           Track this order
         </Link>
         <Link href="/shop" className="btn btn--outline">

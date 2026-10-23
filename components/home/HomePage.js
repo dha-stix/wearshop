@@ -27,6 +27,9 @@ export default function HomePage() {
     // Decide once per mount, even when React re-runs effects in development.
     if (!decided.current) {
       decided.current = true;
+      // The inline script in app/layout.js already decided on a full page load ("intro-pending").
+      // Client-side navigations to "/" skip that script, so fall back to the same check here.
+      const root = document.documentElement;
       const replay = new URLSearchParams(window.location.search).get("intro") === "replay";
       let seen = false;
       try {
@@ -34,7 +37,9 @@ export default function HomePage() {
         sessionStorage.setItem(SEEN_KEY, "1");
       } catch {}
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      setIntro(replay || (!seen && !reduced));
+      const play = root.classList.contains("intro-pending") || replay || (!seen && !reduced);
+      if (!play) root.classList.remove("intro-pending");
+      setIntro(play);
       if (replay) window.history.replaceState(null, "", "/");
     }
 

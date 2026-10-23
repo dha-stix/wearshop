@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Barlow, Barlow_Condensed, Bodoni_Moda, JetBrains_Mono } from "next/font/google";
 import Providers from "@/components/providers/Providers";
 import SiteChrome from "@/components/layout/SiteChrome";
@@ -31,10 +32,25 @@ export const viewport = {
   themeColor: "#0E0E0F",
 };
 
+// Runs before the first paint so a first-time visitor to "/" sees the black intro straight away,
+// instead of the page flashing and then being covered once React loads.
+const INTRO_GATE = `(function(){try{var d=document.documentElement,l=location;if(l.pathname!=="/")return;
+var replay=new URLSearchParams(l.search).get("intro")==="replay";
+var seen=sessionStorage.getItem("wearshop-intro-seen")==="1";
+var reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(replay||(!seen&&!reduced))d.classList.add("intro-pending");}catch(e){}})();`;
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${barlow.variable} ${barlowCondensed.variable} ${bodoni.variable} ${jetbrains.variable}`}>
+    <html
+      lang="en"
+      className={`${barlow.variable} ${barlowCondensed.variable} ${bodoni.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
+    >
       <body>
+        <Script id="intro-gate" strategy="beforeInteractive">
+          {INTRO_GATE}
+        </Script>
         <a href="#main" className="skip-link">
           Skip to content
         </a>

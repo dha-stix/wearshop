@@ -84,17 +84,24 @@ export function CartProvider({ children }) {
   const remove = useCallback((productId) => setItems((list) => list.filter((i) => i.productId !== productId)), []);
   const clear = useCallback(() => setItems([]), []);
 
+  // Once the catalogue has loaded, drop saved items whose watch was deleted or unpublished,
+  // so the cart badge never counts watches the cart page can't show.
+  useEffect(() => {
+    if (!ready || productsLoading) return;
+    setItems((list) => {
+      const kept = list.filter((i) => byId.has(i.productId));
+      return kept.length === list.length ? list : kept;
+    });
+  }, [ready, productsLoading, byId, items]);
+
   const value = useMemo(() => {
-    // Join cart entries with live product data; drop products that were deleted or unpublished.
-    const lines = items
-      .map((i) => ({ ...i, product: byId.get(i.productId) }))
-      .filter((l) => l.product || productsLoading);
-    const resolved = lines.filter((l) => l.product);
+    // Join cart entries with live product data.
+    const lines = items.map((i) => ({ ...i, product: byId.get(i.productId) })).filter((l) => l.product);
     return {
       items,
-      lines: resolved,
-      count: items.reduce((n, i) => n + i.quantity, 0),
-      subtotal: resolved.reduce((sum, l) => sum + l.product.price * l.quantity, 0),
+      lines,
+      count: lines.reduce((n, l) => n + l.quantity, 0),
+      subtotal: lines.reduce((sum, l) => sum + l.product.price * l.quantity, 0),
       ready: ready && !productsLoading,
       add,
       setQuantity,

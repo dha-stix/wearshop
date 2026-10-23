@@ -1,6 +1,19 @@
 /* Homepage: intro sequence and the seven sections. Product cards live here too (also used in shop). */
 
 /* ---------- Intro ---------- */
+/* Black cover painted before React loads, so the page never flashes ahead of the intro. */
+html.intro-pending,
+html.intro-pending body {
+  overflow: hidden;
+  background: var(--black);
+}
+html.intro-pending body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: var(--black);
+}
 html.intro-lock,
 html.intro-lock body {
   overflow: hidden;

@@ -26,7 +26,7 @@ export default function Footer() {
           <div>
             <span className="footer__head">Account</span>
             <Link href="/auth/login">Sign in</Link>
-            <Link href="/dashboard">My orders</Link>
+            <Link href="/dashboard/orders">My orders</Link>
             <Link href="/cart">Cart</Link>
           </div>
           {SUPPORT_EMAIL && (
@@ -41,6 +41,12 @@ export default function Footer() {
         <span>© {new Date().getFullYear()} WearShop</span>
         <ReplayIntroButton />
         <span>Payments secured by Bachs</span>
+        <span className="footer__credit">
+          Built by{" "}
+          <a href="https://www.linkedin.com/in/david-asaolu234/" target="_blank" rel="noopener noreferrer">
+            David Asaolu
+          </a>
+        </span>
       </div>
     </footer>
   );
