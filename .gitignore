@@ -7,3 +7,5 @@ out
 .DS_Store
 service-account*.json
 .firebase
+.vercel
+.env*
