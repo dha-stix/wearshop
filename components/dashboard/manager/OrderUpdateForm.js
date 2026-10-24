@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Icon from "@/components/ui/Icon";
 import { useToast } from "@/components/providers/ToastProvider";
 import { updateOrderStatus } from "@/lib/firebase-actions";
@@ -16,17 +16,12 @@ function nextStatus(order) {
 // Status picker + message. Saving updates the order and notifies the customer in one step.
 export default function OrderUpdateForm({ order }) {
   const toast = useToast();
-  const [status, setStatus] = useState(nextStatus(order));
-  const [message, setMessage] = useState(getStatus(nextStatus(order)).note);
-  const [busy, setBusy] = useState(false);
   const pending = order.status === "pending_payment";
   const options = pending ? [CANCELLED] : MANAGER_STATUSES;
-
-  useEffect(() => {
-    const s = pending ? CANCELLED.id : nextStatus(order);
-    setStatus(s);
-    setMessage(getStatus(s).note);
-  }, [order, pending]);
+  // The parent remounts this form (key) whenever the order's status changes, so these start fresh.
+  const [status, setStatus] = useState(() => (pending ? CANCELLED.id : nextStatus(order)));
+  const [message, setMessage] = useState(() => getStatus(pending ? CANCELLED.id : nextStatus(order)).note);
+  const [busy, setBusy] = useState(false);
 
   const changeStatus = (e) => {
     setStatus(e.target.value);

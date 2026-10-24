@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Icon from "@/components/ui/Icon";
 import { EmptyState, PageLoading } from "@/components/ui/States";
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -25,15 +25,12 @@ const EMPTY = Object.fromEntries(FIELDS.map((f) => [f.name, ""]));
 export default function CheckoutPage() {
   const { user, profile } = useAuth();
   const { lines, subtotal, ready } = useCart();
-  const [form, setForm] = useState(EMPTY);
+  // Prefill from the last order's delivery details, or the Google name. RequireAuth has already
+  // waited for the profile, so it's available on first render.
+  const [form, setForm] = useState(() => ({ ...EMPTY, fullName: user?.displayName || "", ...(profile?.shipping || {}) }));
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState("");
-
-  // Prefill from the last order's delivery details, or the Google name.
-  useEffect(() => {
-    setForm((f) => ({ ...f, fullName: f.fullName || user?.displayName || "", ...(profile?.shipping || {}) }));
-  }, [profile, user]);
 
   if (!ready) return <PageLoading />;
   if (!lines.length) {

@@ -102,7 +102,7 @@ export default function ShopPage() {
           {loading ? (
             <SkeletonGrid count={6} />
           ) : error ? (
-            <div className="notice notice--error">We couldn't load the collection. Refresh to try again.</div>
+            <div className="notice notice--error">We couldn&apos;t load the collection. Refresh to try again.</div>
           ) : visible.length ? (
             <>
               <div className="grid-auto">

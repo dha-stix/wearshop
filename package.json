@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "seed": "node --env-file=.env.local scripts/seed-products.mjs",
-    "make-manager": "node --env-file=.env.local scripts/make-manager.mjs"
+    "make-manager": "node --env-file=.env.local scripts/make-manager.mjs",
+    "lint": "eslint ."
   },
   "dependencies": {
     "firebase": "^12.19.0",
@@ -19,5 +20,9 @@
   },
   "engines": {
     "node": ">=20.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.2"
   }
 }

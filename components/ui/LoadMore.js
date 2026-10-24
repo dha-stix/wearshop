@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Shows a list `pageSize` items at a time. Changing `resetKey` (e.g. the active filters) starts over.
 export function usePaged(list, pageSize = 20, resetKey = "") {
   const [shown, setShown] = useState(pageSize);
-  useEffect(() => setShown(pageSize), [resetKey, pageSize]);
+  const [key, setKey] = useState(resetKey);
+  if (key !== resetKey) {
+    setKey(resetKey);
+    setShown(pageSize);
+  }
   return {
     page: list.slice(0, shown),
     shown: Math.min(shown, list.length),

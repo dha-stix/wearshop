@@ -37,15 +37,15 @@ export default function ProductsPage() {
   const [stock, setStock] = useState(STOCK_FILTERS[params.get("stock")] ? params.get("stock") : "all");
   const [sort, setSort] = useState("newest");
 
-  const bestSort = sort === "best" ? (a, b) => (sales.get(b.id)?.units || 0) - (sales.get(a.id)?.units || 0) : SORTS[sort].fn;
   const rows = useMemo(() => {
+    const bestSort = sort === "best" ? (a, b) => (sales.get(b.id)?.units || 0) - (sales.get(a.id)?.units || 0) : SORTS[sort].fn;
     const q = search.trim().toLowerCase();
     return products
       .filter((p) => !q || p.name.toLowerCase().includes(q))
       .filter((p) => category === "all" || p.category === category)
       .filter(STOCK_FILTERS[stock].match)
       .sort(bestSort);
-  }, [products, search, category, stock, bestSort]);
+  }, [products, sales, search, category, stock, sort]);
   const paged = usePaged(rows, 20, JSON.stringify([search, category, stock, sort]));
   const meterMax = Math.max(12, ...products.map((p) => p.stock || 0));
 

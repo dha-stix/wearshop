@@ -18,7 +18,11 @@ export default function DashboardShell({ nav, role, children }) {
     item.match ? item.match(pathname) : item.exact ? pathname === item.href : pathname.startsWith(item.href);
 
   // Close the mobile drawer whenever the page changes.
-  useEffect(() => setMenuOpen(false), [pathname]);
+  const [shownPath, setShownPath] = useState(pathname);
+  if (shownPath !== pathname) {
+    setShownPath(pathname);
+    setMenuOpen(false);
+  }
 
   // Lock page scroll and allow Escape while the mobile menu is open.
   useEffect(() => {

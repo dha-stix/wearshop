@@ -50,10 +50,11 @@ function Field({ label, error, children, wide }) {
 export default function ProductForm({ editing, onDone }) {
   const toast = useToast();
   const inputRef = useRef(null);
-  const [form, setForm] = useState(BLANK);
+  // Remounted (key) per product by ProductEditor, so state is initialised once from `editing`.
+  const [form, setForm] = useState(() => (editing ? fromProduct(editing) : BLANK));
   // One ordered list of photos: { key, image } for ones already saved, { key, file, preview } for new ones.
   // The first is the cover. Saved photos removed here are deleted from Storage on save.
-  const [gallery, setGallery] = useState([]);
+  const [gallery, setGallery] = useState(() => (editing?.images || []).map((image) => ({ key: image.path || image.url, image })));
   const [removed, setRemoved] = useState([]);
   const [progress, setProgress] = useState({});
   const [errors, setErrors] = useState({});
@@ -67,20 +68,6 @@ export default function ProductForm({ editing, onDone }) {
   }, [gallery]);
   const revokeAll = () => galleryRef.current.forEach((g) => g.preview && URL.revokeObjectURL(g.preview));
   useEffect(() => revokeAll, []);
-
-  const load = (product) => {
-    revokeAll();
-    setForm(product ? fromProduct(product) : BLANK);
-    setGallery((product?.images || []).map((image) => ({ key: image.path || image.url, image })));
-    setRemoved([]);
-    setErrors({});
-    setProgress({});
-  };
-
-  useEffect(() => {
-    load(editing);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editing]);
 
   const set = (key) => (e) => {
     const value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -129,7 +116,7 @@ export default function ProductForm({ editing, onDone }) {
     });
 
   const reset = () => {
-    load(null);
+    revokeAll();
     onDone();
   };
 

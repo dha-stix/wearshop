@@ -8,7 +8,7 @@ import { PageLoading } from "@/components/ui/States";
 import { useCart } from "@/components/providers/CartProvider";
 import { confirmCheckout } from "@/lib/firebase-actions";
 import { useOrder } from "@/lib/hooks";
-import { formatMoney } from "@/lib/config";
+import { formatMoney, REVENUE_STATUSES } from "@/lib/config";
 
 const RETRY_DELAYS = [0, 2000, 4000, 8000];
 
@@ -19,7 +19,8 @@ export default function CheckoutSuccess() {
   const { data: order, loading } = useOrder(orderId);
   const { clear } = useCart();
   const [gaveUp, setGaveUp] = useState(false);
-  const paid = order && order.status !== "pending_payment";
+  const paid = Boolean(order && REVENUE_STATUSES.includes(order.status));
+  const cancelled = order?.status === "cancelled";
 
   useEffect(() => {
     if (!orderId) return;
@@ -59,14 +60,16 @@ export default function CheckoutSuccess() {
   return (
     <div className="container success">
       <div className="success__mark">
-        <Icon name={paid ? "check" : "clock"} size={44} strokeWidth={paid ? 2.2 : 1.6} />
+        <Icon name={paid ? "check" : cancelled ? "close" : "clock"} size={44} strokeWidth={paid ? 2.2 : 1.6} />
       </div>
       <p className="eyebrow" style={{ justifyContent: "center" }}>
         Order {order?.number}
       </p>
-      <h1>{paid ? "Payment confirmed" : "Confirming payment"}</h1>
+      <h1>{paid ? "Payment confirmed" : cancelled ? "Payment not completed" : "Confirming payment"}</h1>
       <p className="lead">
-        {paid
+        {cancelled
+          ? "This payment wasn't completed, so you haven't been charged. Your cart is still saved if you'd like to try again."
+          : paid
           ? `Thank you. We've received ${formatMoney(order.total)} and your watch is being prepared. You'll get a notification at every step.`
           : gaveUp
             ? "Bachs hasn't confirmed this payment yet. If you completed it, it will show in your dashboard within a few minutes."

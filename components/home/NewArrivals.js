@@ -34,7 +34,7 @@ export default function NewArrivals({ products, loading }) {
         ) : (
           <div className="panel">
             <EmptyState title="The vault is being stocked">
-              New watches land here as soon as they're published. Check back shortly.
+              New watches land here as soon as they&apos;re published. Check back shortly.
             </EmptyState>
           </div>
         )}

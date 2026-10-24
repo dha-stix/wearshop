@@ -30,6 +30,11 @@ export async function POST(request) {
     await attachCheckout(order.id, checkout);
     return Response.json({ orderId: order.id, number: order.number, checkoutUrl: checkout.checkout_url });
   } catch (err) {
+    // Bachs explains rejected requests (e.g. an unsupported amount); show that instead of a generic error.
+    if (err.code && err.status >= 400 && err.status < 500) {
+      console.error("Bachs rejected checkout:", err.code, err.message);
+      return Response.json({ error: `Payment couldn't start: ${err.message}` }, { status: 502 });
+    }
     return errorResponse(err, "We couldn't reach Bachs to start the payment. Try again.");
   }
 }

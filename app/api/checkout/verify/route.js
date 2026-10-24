@@ -1,5 +1,5 @@
 import { getRequestUser } from "@/lib/server/firebase-admin";
-import { getOrder, markOrderPaid } from "@/lib/server/orders";
+import { getOrder, markCheckoutExpired, markOrderPaid } from "@/lib/server/orders";
 import { getCheckoutSession } from "@/lib/server/bachs";
 import { errorResponse } from "@/lib/server/respond";
 
@@ -21,6 +21,9 @@ export async function GET(request) {
       const session = await getCheckoutSession(order.payment.checkoutId);
       if (session.status === "completed") {
         ({ status } = await markOrderPaid(orderId));
+      } else if (session.status === "expired" || session.status === "cancelled") {
+        await markCheckoutExpired(orderId);
+        status = "cancelled";
       }
     }
     return Response.json({ status, number: order.number });

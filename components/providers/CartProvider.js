@@ -33,7 +33,10 @@ export function CartProvider({ children }) {
   const [ready, setReady] = useState(false);
   const syncedUid = useRef(null);
 
+  // localStorage only exists in the browser, so the saved cart is read after the first render
+  // (reading it during render would make the server and browser HTML disagree).
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setItems(readLocal());
     setReady(true);
   }, []);
@@ -51,15 +54,18 @@ export function CartProvider({ children }) {
     if (!user) syncedUid.current = null;
   }, [user]);
 
+  // Save locally and to the account. Once the catalogue has loaded, watches that were deleted or
+  // unpublished are left out, so they quietly drop out of the saved cart.
   useEffect(() => {
     if (!ready) return;
+    const toSave = productsLoading ? items : items.filter((i) => byId.has(i.productId));
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
     } catch {}
     if (!user || syncedUid.current !== user.uid) return;
-    const t = setTimeout(() => saveCart(user.uid, items).catch(() => {}), 600);
+    const t = setTimeout(() => saveCart(user.uid, toSave).catch(() => {}), 600);
     return () => clearTimeout(t);
-  }, [items, user, ready]);
+  }, [items, user, ready, productsLoading, byId]);
 
   const add = useCallback((productId, quantity = 1) => {
     setItems((list) => {
@@ -83,16 +89,6 @@ export function CartProvider({ children }) {
 
   const remove = useCallback((productId) => setItems((list) => list.filter((i) => i.productId !== productId)), []);
   const clear = useCallback(() => setItems([]), []);
-
-  // Once the catalogue has loaded, drop saved items whose watch was deleted or unpublished,
-  // so the cart badge never counts watches the cart page can't show.
-  useEffect(() => {
-    if (!ready || productsLoading) return;
-    setItems((list) => {
-      const kept = list.filter((i) => byId.has(i.productId));
-      return kept.length === list.length ? list : kept;
-    });
-  }, [ready, productsLoading, byId, items]);
 
   const value = useMemo(() => {
     // Join cart entries with live product data.

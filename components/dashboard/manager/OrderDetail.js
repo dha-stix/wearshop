@@ -124,7 +124,7 @@ export default function OrderDetail({ id }) {
         </div>
 
         <aside className="dash-cols__side">
-          <OrderUpdateForm order={order} />
+          <OrderUpdateForm key={`${order.id}-${order.status}`} order={order} />
         </aside>
       </div>
     </>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EmptyState, PageLoading } from "@/components/ui/States";
 import { DashHeader } from "../DashboardShell";
 import ProductForm from "./ProductForm";
@@ -14,9 +14,7 @@ export default function ProductEditor({ id }) {
   const live = id ? products.find((p) => p.id === id) : null;
   // Keep the version that was opened, so live stock updates don't wipe unsaved edits.
   const [product, setProduct] = useState(null);
-  useEffect(() => {
-    if (live && !product) setProduct(live);
-  }, [live, product]);
+  if (live && !product) setProduct(live);
   const back = { href: "/dashboard/products", label: "All products" };
 
   if (id && (loading || (live && !product))) return <PageLoading />;
@@ -37,7 +35,7 @@ export default function ProductEditor({ id }) {
     <>
       <DashHeader eyebrow={product ? "Edit product" : "New product"} title={product ? product.name : "Add a watch"} back={back} />
       <div style={{ marginTop: 32 }}>
-        <ProductForm editing={product} onDone={() => router.push("/dashboard/products")} />
+        <ProductForm key={product?.id || "new"} editing={product} onDone={() => router.push("/dashboard/products")} />
       </div>
     </>
   );
