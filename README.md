@@ -2,6 +2,10 @@
 
 Luxury wristwatch store built with Next.js 16 (App Router), Firebase (Auth, Firestore, Storage) and Bachs payments.
 
+- **Live:** https://wearshop-eosin.vercel.app (Vercel project `wearshop`, auto-deploys every push to `main`)
+- **Firebase project:** `wearshop-a4079`
+- **Bachs webhook URL:** `https://wearshop-eosin.vercel.app/api/webhooks/bachs`
+
 - **Customers** browse watches, add them to a cart, sign in with Google, pay through Bachs, and track every delivery update from their dashboard.
 - **Managers** upload products with several photos at once, see revenue sold and stock left, restock, and move orders through delivery. Each update sends the customer a notification.
 
@@ -116,5 +120,9 @@ This uploads the 90 starter watches and their photos to Firebase Storage and Fir
 Prices, stock and payment status are only ever written by the server. The Firestore rules block the browser from creating orders or marking them paid.
 
 ## Deploying
+
+Deployed on Vercel from GitHub (`dha-stix/wearshop`): every push to `main` goes live. Environment variables live in the Vercel project settings (Production). `firebase-admin` is pinned to v13 because v14's dependencies (jose 6, ES-module only) can't be loaded by Vercel's Node runtime.
+
+To use another host or domain:
 
 Any Node host that runs Next.js works (Vercel, Firebase App Hosting, Render…). Add the same environment variables in the host's dashboard, then update `NEXT_PUBLIC_SITE_URL`, the Firebase authorized domains and the Bachs webhook URL to the production domain.
