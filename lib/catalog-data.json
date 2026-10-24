@@ -2,7 +2,7 @@
   {
     "id": "nomad-dress",
     "name": "Nomad Dress",
-    "price": 1270,
+    "price": 1905000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -25,7 +25,7 @@
   {
     "id": "vanguard-dress-black",
     "name": "Vanguard Dress Black",
-    "price": 1420,
+    "price": 2130000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -41,14 +41,14 @@
       "vanguard-dress-black-detail-1.webp"
     ],
     "credit": {
-      "author": "VVS \u2122",
+      "author": "VVS ™",
       "source": "https://unsplash.com/photos/black-and-silver-chronograph-watch-cQb7tILneJQ"
     }
   },
   {
     "id": "oberon-dress",
     "name": "Oberon Dress",
-    "price": 840,
+    "price": 1260000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -71,7 +71,7 @@
   {
     "id": "vanguard-classique-grey",
     "name": "Vanguard Classique Grey",
-    "price": 1070,
+    "price": 1605000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -94,7 +94,7 @@
   {
     "id": "trident-chrono",
     "name": "Trident Chrono",
-    "price": 3040,
+    "price": 4560000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -117,7 +117,7 @@
   {
     "id": "phantom-classique",
     "name": "Phantom Classique",
-    "price": 1290,
+    "price": 1935000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -140,7 +140,7 @@
   {
     "id": "ember-rally-chrono",
     "name": "Ember Rally Chrono",
-    "price": 2500,
+    "price": 3750000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -163,7 +163,7 @@
   {
     "id": "kestrel-deep-200",
     "name": "Kestrel Deep 200",
-    "price": 2190,
+    "price": 3285000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -186,7 +186,7 @@
   {
     "id": "vanguard-abyss-300",
     "name": "Vanguard Abyss 300",
-    "price": 1320,
+    "price": 1980000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -209,7 +209,7 @@
   {
     "id": "citadel-classique",
     "name": "Citadel Classique",
-    "price": 2490,
+    "price": 3735000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -232,7 +232,7 @@
   {
     "id": "praetor-classique",
     "name": "Praetor Classique",
-    "price": 2550,
+    "price": 3825000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -257,7 +257,7 @@
   {
     "id": "equinox-abyss-300-black",
     "name": "Equinox Abyss 300 Black",
-    "price": 2100,
+    "price": 3150000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -280,7 +280,7 @@
   {
     "id": "rampart-chronograph-white",
     "name": "Rampart Chronograph White",
-    "price": 1970,
+    "price": 2955000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -303,7 +303,7 @@
   {
     "id": "apex-classique-green",
     "name": "Apex Classique Green",
-    "price": 1860,
+    "price": 2790000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -326,7 +326,7 @@
   {
     "id": "vanguard-rally-chrono-cream",
     "name": "Vanguard Rally Chrono Cream",
-    "price": 2180,
+    "price": 3270000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -349,7 +349,7 @@
   {
     "id": "valor-diver-black",
     "name": "Valor Diver Black",
-    "price": 1130,
+    "price": 1695000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -372,7 +372,7 @@
   {
     "id": "spartan-classique-silver",
     "name": "Spartan Classique Silver",
-    "price": 1540,
+    "price": 2310000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -395,7 +395,7 @@
   {
     "id": "rampart-rally-chrono-white",
     "name": "Rampart Rally Chrono White",
-    "price": 2520,
+    "price": 3780000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -420,7 +420,7 @@
   {
     "id": "majesty-dress-salmon",
     "name": "Majesty Dress Salmon",
-    "price": 1310,
+    "price": 1965000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -443,7 +443,7 @@
   {
     "id": "phantom-rally-chrono-brown",
     "name": "Phantom Rally Chrono Brown",
-    "price": 2400,
+    "price": 3600000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -466,7 +466,7 @@
   {
     "id": "rampart-chronograph",
     "name": "Rampart Chronograph",
-    "price": 1940,
+    "price": 2910000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -489,7 +489,7 @@
   {
     "id": "apex-heritage-white",
     "name": "Apex Heritage White",
-    "price": 1230,
+    "price": 1845000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -512,7 +512,7 @@
   {
     "id": "baron-chrono-black",
     "name": "Baron Chrono Black",
-    "price": 1710,
+    "price": 2565000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -535,7 +535,7 @@
   {
     "id": "legion-abyss-300",
     "name": "Legion Abyss 300",
-    "price": 2230,
+    "price": 3345000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -558,7 +558,7 @@
   {
     "id": "noble-heritage-white",
     "name": "Noble Heritage White",
-    "price": 2360,
+    "price": 3540000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -581,7 +581,7 @@
   {
     "id": "duke-heritage",
     "name": "Duke Heritage",
-    "price": 1920,
+    "price": 2880000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -604,7 +604,7 @@
   {
     "id": "summit-rally-chrono-black",
     "name": "Summit Rally Chrono Black",
-    "price": 2720,
+    "price": 4080000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -627,7 +627,7 @@
   {
     "id": "atlas-heritage-white",
     "name": "Atlas Heritage White",
-    "price": 1240,
+    "price": 1860000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -652,14 +652,14 @@
   {
     "id": "horizon-pilot-white",
     "name": "Horizon Pilot White",
-    "price": 560,
+    "price": 840000,
     "category": "field",
     "movement": "Automatic",
     "strap": "Steel bracelet",
     "caseSize": 39,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a white dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a white dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 14,
     "featured": false,
     "images": [
@@ -675,7 +675,7 @@
   {
     "id": "dynasty-classique-blue",
     "name": "Dynasty Classique Blue",
-    "price": 2430,
+    "price": 3645000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -698,7 +698,7 @@
   {
     "id": "ember-chronograph",
     "name": "Ember Chronograph",
-    "price": 2440,
+    "price": 3660000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -721,7 +721,7 @@
   {
     "id": "tribune-chrono",
     "name": "Tribune Chrono",
-    "price": 1940,
+    "price": 2910000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -744,7 +744,7 @@
   {
     "id": "phantom-dress-black",
     "name": "Phantom Dress Black",
-    "price": 880,
+    "price": 1320000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -767,7 +767,7 @@
   {
     "id": "gallant-chronograph",
     "name": "Gallant Chronograph",
-    "price": 2820,
+    "price": 4230000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -790,7 +790,7 @@
   {
     "id": "warden-dress",
     "name": "Warden Dress",
-    "price": 1770,
+    "price": 2655000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -813,14 +813,14 @@
   {
     "id": "navigator-pilot-black",
     "name": "Navigator Pilot Black",
-    "price": 870,
+    "price": 1305000,
     "category": "field",
     "movement": "Automatic",
     "strap": "Steel bracelet",
     "caseSize": 38,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 7,
     "featured": false,
     "images": [
@@ -836,7 +836,7 @@
   {
     "id": "obsidian-dress",
     "name": "Obsidian Dress",
-    "price": 1190,
+    "price": 1785000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -859,14 +859,14 @@
   {
     "id": "warden-field-black",
     "name": "Warden Field Black",
-    "price": 1110,
+    "price": 1665000,
     "category": "field",
     "movement": "Quartz",
     "strap": "Steel bracelet",
     "caseSize": 38,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 3,
     "featured": false,
     "images": [
@@ -882,7 +882,7 @@
   {
     "id": "admiral-chronograph-black",
     "name": "Admiral Chronograph Black",
-    "price": 2320,
+    "price": 3480000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -905,14 +905,14 @@
   {
     "id": "legion-expedition",
     "name": "Legion Expedition",
-    "price": 1160,
+    "price": 1740000,
     "category": "field",
     "movement": "Automatic",
     "strap": "Steel bracelet",
     "caseSize": 38,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a white dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a white dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 7,
     "featured": false,
     "images": [
@@ -928,7 +928,7 @@
   {
     "id": "element-rally-chrono-teal",
     "name": "Element Rally Chrono Teal",
-    "price": 1630,
+    "price": 2445000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -946,14 +946,14 @@
       "element-rally-chrono-teal-5.webp"
     ],
     "credit": {
-      "author": "VVS \u2122",
+      "author": "VVS ™",
       "source": "https://unsplash.com/photos/silver-link-bracelet-round-chronograph-watch--KRN2kU9e1s"
     }
   },
   {
     "id": "cobalt-dress-white",
     "name": "Cobalt Dress White",
-    "price": 990,
+    "price": 1485000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Leather",
@@ -976,7 +976,7 @@
   {
     "id": "ranger-chronograph",
     "name": "Ranger Chronograph",
-    "price": 1690,
+    "price": 2535000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -999,7 +999,7 @@
   {
     "id": "spartan-chrono",
     "name": "Spartan Chrono",
-    "price": 1690,
+    "price": 2535000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1022,7 +1022,7 @@
   {
     "id": "meridian-heritage-black",
     "name": "Meridian Heritage Black",
-    "price": 1150,
+    "price": 1725000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -1038,14 +1038,14 @@
       "meridian-heritage-black-detail-2.webp"
     ],
     "credit": {
-      "author": "\u00c1lvaro Bernal",
+      "author": "Álvaro Bernal",
       "source": "https://unsplash.com/photos/round-black-braun-analog-watch-with-black-band-at-730-RgIKRYhmG2k"
     }
   },
   {
     "id": "element-chronograph",
     "name": "Element Chronograph",
-    "price": 2560,
+    "price": 3840000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1068,7 +1068,7 @@
   {
     "id": "gladius-dress-black",
     "name": "Gladius Dress Black",
-    "price": 1160,
+    "price": 1740000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1091,7 +1091,7 @@
   {
     "id": "regent-diver",
     "name": "Regent Diver",
-    "price": 1580,
+    "price": 2370000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1114,7 +1114,7 @@
   {
     "id": "praetor-abyss-300-black",
     "name": "Praetor Abyss 300 Black",
-    "price": 1180,
+    "price": 1770000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1137,7 +1137,7 @@
   {
     "id": "laurel-abyss-300",
     "name": "Laurel Abyss 300",
-    "price": 2250,
+    "price": 3375000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1160,7 +1160,7 @@
   {
     "id": "vector-deep-200",
     "name": "Vector Deep 200",
-    "price": 1750,
+    "price": 2625000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1183,7 +1183,7 @@
   {
     "id": "aegis-classique-black",
     "name": "Aegis Classique Black",
-    "price": 910,
+    "price": 1365000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1207,7 +1207,7 @@
   {
     "id": "phantom-rally-chrono-black",
     "name": "Phantom Rally Chrono Black",
-    "price": 1480,
+    "price": 2220000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1230,7 +1230,7 @@
   {
     "id": "zenith-classique",
     "name": "Zenith Classique",
-    "price": 990,
+    "price": 1485000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1246,14 +1246,14 @@
       "zenith-classique-detail-2.webp"
     ],
     "credit": {
-      "author": "Efe Ya\u011f\u0131z Soysal",
+      "author": "Efe Yağız Soysal",
       "source": "https://unsplash.com/photos/person-wearing-white-and-black-chronograph-watch-YHixKGutUds"
     }
   },
   {
     "id": "warden-abyss-300",
     "name": "Warden Abyss 300",
-    "price": 930,
+    "price": 1395000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1276,14 +1276,14 @@
   {
     "id": "herald-expedition",
     "name": "Herald Expedition",
-    "price": 1130,
+    "price": 1695000,
     "category": "field",
     "movement": "Quartz",
     "strap": "Leather",
     "caseSize": 39,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a black dial with a leather for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a black dial with a leather for an easy fit from desk to dinner.",
     "stock": 8,
     "featured": false,
     "images": [
@@ -1299,14 +1299,14 @@
   {
     "id": "atlas-expedition-green",
     "name": "Atlas Expedition Green",
-    "price": 1440,
+    "price": 2160000,
     "category": "field",
     "movement": "Automatic",
     "strap": "Steel bracelet",
     "caseSize": 40,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a green dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a green dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 7,
     "featured": false,
     "images": [
@@ -1323,7 +1323,7 @@
   {
     "id": "lancer-chrono",
     "name": "Lancer Chrono",
-    "price": 1670,
+    "price": 2505000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1346,7 +1346,7 @@
   {
     "id": "kestrel-rally-chrono-salmon",
     "name": "Kestrel Rally Chrono Salmon",
-    "price": 2400,
+    "price": 3600000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Leather",
@@ -1369,7 +1369,7 @@
   {
     "id": "harbor-classique",
     "name": "Harbor Classique",
-    "price": 1150,
+    "price": 1725000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -1392,7 +1392,7 @@
   {
     "id": "equinox-abyss-300",
     "name": "Equinox Abyss 300",
-    "price": 1380,
+    "price": 2070000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1415,7 +1415,7 @@
   {
     "id": "aurum-heritage",
     "name": "Aurum Heritage",
-    "price": 2840,
+    "price": 4260000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -1438,7 +1438,7 @@
   {
     "id": "baron-dress-blue",
     "name": "Baron Dress Blue",
-    "price": 910,
+    "price": 1365000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -1461,14 +1461,14 @@
   {
     "id": "marshal-pilot",
     "name": "Marshal Pilot",
-    "price": 1240,
+    "price": 1860000,
     "category": "field",
     "movement": "Automatic",
     "strap": "Steel bracelet",
     "caseSize": 42,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 6,
     "featured": false,
     "images": [
@@ -1484,7 +1484,7 @@
   {
     "id": "apex-deep-200",
     "name": "Apex Deep 200",
-    "price": 980,
+    "price": 1470000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1507,7 +1507,7 @@
   {
     "id": "element-classique-brown",
     "name": "Element Classique Brown",
-    "price": 1000,
+    "price": 1500000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Steel bracelet",
@@ -1530,7 +1530,7 @@
   {
     "id": "caliber-dress",
     "name": "Caliber Dress",
-    "price": 920,
+    "price": 1380000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1553,7 +1553,7 @@
   {
     "id": "ironclad-heritage-blue",
     "name": "Ironclad Heritage Blue",
-    "price": 2900,
+    "price": 4350000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1576,7 +1576,7 @@
   {
     "id": "element-dress-blue",
     "name": "Element Dress Blue",
-    "price": 2760,
+    "price": 4140000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1599,7 +1599,7 @@
   {
     "id": "titan-dress",
     "name": "Titan Dress",
-    "price": 960,
+    "price": 1440000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1622,7 +1622,7 @@
   {
     "id": "citadel-diver-blue",
     "name": "Citadel Diver Blue",
-    "price": 1780,
+    "price": 2670000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1645,7 +1645,7 @@
   {
     "id": "citadel-heritage",
     "name": "Citadel Heritage",
-    "price": 2590,
+    "price": 3885000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1661,14 +1661,14 @@
       "citadel-heritage-detail-2.webp"
     ],
     "credit": {
-      "author": "Jo\u00ebl de Vriend",
+      "author": "Joël de Vriend",
       "source": "https://unsplash.com/photos/a-gold-watch-sitting-on-top-of-a-pile-of-white-fur-tEmqVGNOia4"
     }
   },
   {
     "id": "navigator-heritage",
     "name": "Navigator Heritage",
-    "price": 1440,
+    "price": 2160000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1691,7 +1691,7 @@
   {
     "id": "regent-chronograph-black",
     "name": "Regent Chronograph Black",
-    "price": 2820,
+    "price": 4230000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1714,7 +1714,7 @@
   {
     "id": "horizon-dress",
     "name": "Horizon Dress",
-    "price": 2140,
+    "price": 3210000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1737,7 +1737,7 @@
   {
     "id": "dynasty-dress-white",
     "name": "Dynasty Dress White",
-    "price": 1340,
+    "price": 2010000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -1760,7 +1760,7 @@
   {
     "id": "sentinel-chronograph",
     "name": "Sentinel Chronograph",
-    "price": 2200,
+    "price": 3300000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1783,7 +1783,7 @@
   {
     "id": "keystone-heritage-black",
     "name": "Keystone Heritage Black",
-    "price": 2250,
+    "price": 3375000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -1806,7 +1806,7 @@
   {
     "id": "falcon-deep-200-green",
     "name": "Falcon Deep 200 Green",
-    "price": 1830,
+    "price": 2745000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1829,7 +1829,7 @@
   {
     "id": "vector-chrono-gold",
     "name": "Vector Chrono Gold",
-    "price": 3310,
+    "price": 4965000,
     "category": "chronograph",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1852,7 +1852,7 @@
   {
     "id": "imperial-heritage",
     "name": "Imperial Heritage",
-    "price": 2220,
+    "price": 3330000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -1875,7 +1875,7 @@
   {
     "id": "trident-heritage",
     "name": "Trident Heritage",
-    "price": 2890,
+    "price": 4335000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1898,7 +1898,7 @@
   {
     "id": "outpost-classique",
     "name": "Outpost Classique",
-    "price": 1640,
+    "price": 2460000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -1921,14 +1921,14 @@
   {
     "id": "helios-expedition-black",
     "name": "Helios Expedition Black",
-    "price": 1280,
+    "price": 1920000,
     "category": "field",
     "movement": "Automatic",
     "strap": "Steel bracelet",
     "caseSize": 40,
     "waterResistance": "100m",
     "crystal": "Sapphire",
-    "description": "Legible, rugged and honest \u2014 made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
+    "description": "Legible, rugged and honest — made for long days outdoors. This piece pairs a black dial with a steel bracelet for an easy fit from desk to dinner.",
     "stock": 11,
     "featured": false,
     "images": [
@@ -1944,7 +1944,7 @@
   {
     "id": "apex-heritage",
     "name": "Apex Heritage",
-    "price": 2610,
+    "price": 3915000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -1967,7 +1967,7 @@
   {
     "id": "cobalt-classique-white",
     "name": "Cobalt Classique White",
-    "price": 2090,
+    "price": 3135000,
     "category": "dress",
     "movement": "Manual wind",
     "strap": "Leather",
@@ -1990,7 +1990,7 @@
   {
     "id": "regent-classique",
     "name": "Regent Classique",
-    "price": 2520,
+    "price": 3780000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -2013,7 +2013,7 @@
   {
     "id": "zenith-heritage-gold",
     "name": "Zenith Heritage Gold",
-    "price": 1670,
+    "price": 2505000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Leather",
@@ -2036,7 +2036,7 @@
   {
     "id": "orion-classique-champagne",
     "name": "Orion Classique Champagne",
-    "price": 1950,
+    "price": 2925000,
     "category": "dress",
     "movement": "Automatic",
     "strap": "Steel bracelet",
@@ -2059,7 +2059,7 @@
   {
     "id": "harbor-deep-200-blue",
     "name": "Harbor Deep 200 Blue",
-    "price": 2550,
+    "price": 3825000,
     "category": "diver",
     "movement": "Automatic",
     "strap": "Steel bracelet",

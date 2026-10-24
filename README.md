@@ -70,7 +70,7 @@ While developing on localhost, Bachs can't reach your webhook. The success page 
 cp .env.example .env.local
 ```
 
-Fill in every value. `NEXT_PUBLIC_CURRENCY` must be a currency Bachs supports for your account (for example `USD` or `NGN`). `NEXT_PUBLIC_SITE_URL` is used for the Bachs return URLs.
+Fill in every value. `NEXT_PUBLIC_CURRENCY` is `NGN` (Naira): Bachs supports NGN card and bank transfer for any amount, while USD cards are capped at $500 per payment on this account. Prices in Firestore are stored in this currency. `NEXT_PUBLIC_SITE_URL` is used for the Bachs return URLs.
 
 ## 4. Run it
 

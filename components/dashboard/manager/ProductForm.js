@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Icon from "@/components/ui/Icon";
 import { useToast } from "@/components/providers/ToastProvider";
 import { createProduct, deleteProductImage, updateProduct } from "@/lib/firebase-actions";
-import { CATEGORIES, MAX_IMAGE_MB, MAX_IMAGES_PER_PRODUCT, MOVEMENTS, STRAPS } from "@/lib/config";
+import { CATEGORIES, CURRENCY, MAX_IMAGE_MB, MAX_IMAGES_PER_PRODUCT, MOVEMENTS, STRAPS } from "@/lib/config";
 
 const BLANK = {
   name: "",
@@ -249,7 +249,7 @@ export default function ProductForm({ editing, onDone }) {
             <Field label="Product name" error={errors.name} wide>
               <input className="input" value={form.name} onChange={set("name")} aria-invalid={Boolean(errors.name)} />
             </Field>
-            <Field label="Price" error={errors.price}>
+            <Field label={`Price (${CURRENCY})`} error={errors.price}>
               <input className="input mono" type="number" min="0" step="0.01" inputMode="decimal" value={form.price} onChange={set("price")} aria-invalid={Boolean(errors.price)} />
             </Field>
             <Field label="Stock" error={errors.stock}>

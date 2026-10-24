@@ -58,7 +58,7 @@ export default function ShopFilters({ filters, setFilters, reset, priceCeiling, 
             type="range"
             min="0"
             max={priceCeiling}
-            step="10"
+            step={Math.max(10, Math.round(priceCeiling / 200 / 1000) * 1000)}
             value={max}
             aria-label="Maximum price"
             onChange={(e) => update({ maxPrice: Number(e.target.value) })}
