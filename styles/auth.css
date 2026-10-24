@@ -150,11 +150,3 @@
     font-size: 22px;
   }
 }
-.demo-signin {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.demo-signin .notice {
-  align-items: flex-start;
-}
