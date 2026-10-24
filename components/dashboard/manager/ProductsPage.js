@@ -8,6 +8,7 @@ import LoadMore, { usePaged } from "@/components/ui/LoadMore";
 import { EmptyState, PageLoading } from "@/components/ui/States";
 import { CATEGORIES, LOW_STOCK_THRESHOLD } from "@/lib/config";
 import { DashHeader, Stat } from "../DashboardShell";
+import { useAuth } from "@/components/providers/AuthProvider";
 import InventoryTable from "./InventoryTable";
 import { useManagerData } from "./ManagerData";
 
@@ -26,7 +27,9 @@ const SORTS = {
   "price-asc": { label: "Price: low to high", fn: (a, b) => a.price - b.price },
 };
 
+// Managers can add, edit, restock and delete; staff get the same list read-only.
 export default function ProductsPage() {
+  const { isManager } = useAuth();
   const params = useSearchParams();
   const { products, sales, loading } = useManagerData();
   const [search, setSearch] = useState("");
@@ -55,12 +58,14 @@ export default function ProductsPage() {
   return (
     <>
       <DashHeader
-        eyebrow="Store management"
+        eyebrow={isManager ? "Store management" : "Staff desk · view only"}
         title="Products"
         actions={
-          <Link href="/dashboard/products/new" className="btn btn--dark btn--sm">
-            <Icon name="plus" size={16} strokeWidth={2} /> Add product
-          </Link>
+          isManager && (
+            <Link href="/dashboard/products/new" className="btn btn--dark btn--sm">
+              <Icon name="plus" size={16} strokeWidth={2} /> Add product
+            </Link>
+          )
         }
       />
       <div className="stats" style={{ marginTop: 32 }}>
@@ -106,7 +111,7 @@ export default function ProductsPage() {
                   {s.label}
                 </option>
               ))}
-              <option value="best">Best sellers</option>
+              {isManager && <option value="best">Best sellers</option>}
             </select>
           </label>
         </div>
@@ -116,7 +121,7 @@ export default function ProductsPage() {
           </EmptyState>
         ) : (
           <>
-            <InventoryTable rows={paged.page} sales={sales} meterMax={meterMax} />
+            <InventoryTable rows={paged.page} sales={sales} meterMax={meterMax} readOnly={!isManager} />
             <div className="panel__body">
               <LoadMore paged={paged} noun="products" />
             </div>

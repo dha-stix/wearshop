@@ -87,6 +87,16 @@ npm run make-manager -- you@gmail.com
 
 Reload `/dashboard` to see the manager view. You can also set `role: "manager"` on your `users/{uid}` document in the Firestore console.
 
+After that, managers give other people access from **Dashboard → Team**. The person must have signed in once with Google.
+
+| Role | Can |
+|---|---|
+| **Manager** | Everything: add, edit, restock and delete products; see revenue; update orders; manage the team |
+| **Staff** | View products (including drafts and stock) and update orders, which notifies the customer. Can't change products, see revenue or manage the team |
+| **Customer** | Shop, pay and track their own orders |
+
+Role changes go through `/api/team`, which checks the caller is a manager. The store always keeps at least one manager, and nobody can change their own role. The Firestore rules enforce the same limits.
+
 ### Load the starter catalogue
 
 ```bash

@@ -51,27 +51,28 @@ export default function ProductForm({ editing, onDone }) {
   const toast = useToast();
   const inputRef = useRef(null);
   const [form, setForm] = useState(BLANK);
-  const [kept, setKept] = useState([]); // images already in Storage
+  // One ordered list of photos: { key, image } for ones already saved, { key, file, preview } for new ones.
+  // The first is the cover. Saved photos removed here are deleted from Storage on save.
+  const [gallery, setGallery] = useState([]);
   const [removed, setRemoved] = useState([]);
-  const [files, setFiles] = useState([]); // [{ file, preview }]
   const [progress, setProgress] = useState({});
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const [dragging, setDragging] = useState(false);
 
   // Free blob previews when the form unmounts.
-  const filesRef = useRef(files);
+  const galleryRef = useRef(gallery);
   useEffect(() => {
-    filesRef.current = files;
-  }, [files]);
-  useEffect(() => () => filesRef.current.forEach((f) => URL.revokeObjectURL(f.preview)), []);
+    galleryRef.current = gallery;
+  }, [gallery]);
+  const revokeAll = () => galleryRef.current.forEach((g) => g.preview && URL.revokeObjectURL(g.preview));
+  useEffect(() => revokeAll, []);
 
   const load = (product) => {
-    filesRef.current.forEach((f) => URL.revokeObjectURL(f.preview));
+    revokeAll();
     setForm(product ? fromProduct(product) : BLANK);
-    setKept(product?.images || []);
+    setGallery((product?.images || []).map((image) => ({ key: image.path || image.url, image })));
     setRemoved([]);
-    setFiles([]);
     setErrors({});
     setProgress({});
   };
@@ -92,7 +93,8 @@ export default function ProductForm({ editing, onDone }) {
     const tooBig = incoming.filter((f) => f.size > MAX_IMAGE_MB * 1024 * 1024);
     if (tooBig.length) toast(`${tooBig.map((f) => f.name).join(", ")} is over ${MAX_IMAGE_MB}MB`, "error");
     const ok = incoming.filter((f) => f.size <= MAX_IMAGE_MB * 1024 * 1024);
-    setFiles((cur) => [...cur, ...ok.map((file) => ({ file, preview: URL.createObjectURL(file) }))]);
+    const added = ok.map((file) => ({ key: `new-${Math.random().toString(36).slice(2)}`, file, preview: URL.createObjectURL(file) }));
+    setGallery((cur) => [...cur, ...added]);
     setErrors((errs) => ({ ...errs, images: undefined }));
   };
 
@@ -102,26 +104,29 @@ export default function ProductForm({ editing, onDone }) {
     addFiles(e.dataTransfer.files);
   };
 
-  // Combined, ordered list of existing and new images so the manager can pick the cover.
-  const gallery = [...kept.map((img) => ({ kind: "kept", img, src: img.url })), ...files.map((f) => ({ kind: "new", f, src: f.preview }))];
+  const newCount = gallery.filter((g) => g.file).length;
 
   const removeAt = (i) => {
     const item = gallery[i];
-    if (item.kind === "kept") {
-      setKept((k) => k.filter((img) => img !== item.img));
-      setRemoved((r) => [...r, item.img]);
-    } else {
-      URL.revokeObjectURL(item.f.preview);
-      setFiles((fs) => fs.filter((f) => f !== item.f));
-    }
+    if (item.image) setRemoved((r) => [...r, item.image]);
+    else URL.revokeObjectURL(item.preview);
+    setGallery((g) => g.filter((_, j) => j !== i));
   };
 
-  const makeCover = (i) => {
-    const item = gallery[i];
-    if (item.kind === "kept") setKept((k) => [item.img, ...k.filter((img) => img !== item.img)]);
-    else if (!kept.length) setFiles((fs) => [item.f, ...fs.filter((f) => f !== item.f)]);
-    else toast("Save first, then set an uploaded image as the cover", "error");
+  const undoRemove = () => {
+    setGallery((g) => [...g, ...removed.map((image) => ({ key: image.path || image.url, image }))]);
+    setRemoved([]);
   };
+
+  // Moves a photo to a new position (0 = cover).
+  const move = (from, to) =>
+    setGallery((g) => {
+      if (to < 0 || to >= g.length) return g;
+      const next = [...g];
+      const [item] = next.splice(from, 1);
+      next.splice(to, 0, item);
+      return next;
+    });
 
   const reset = () => {
     load(null);
@@ -134,15 +139,14 @@ export default function ProductForm({ editing, onDone }) {
     setErrors(errs);
     if (Object.keys(errs).length) return;
     setBusy(true);
-    const onProgress = (i, pct) => setProgress((p) => ({ ...p, [i]: pct }));
+    const onProgress = (key, pct) => setProgress((p) => ({ ...p, [key]: pct }));
     try {
-      const newFiles = files.map((f) => f.file);
       if (editing) {
-        await updateProduct(editing.id, form, newFiles, kept, onProgress);
+        await updateProduct(editing.id, form, gallery, onProgress);
         await Promise.all(removed.map(deleteProductImage));
-        toast(`${form.name} updated`);
+        toast(`${form.name} updated${removed.length ? ` · ${removed.length} photo${removed.length === 1 ? "" : "s"} deleted` : ""}`);
       } else {
-        await createProduct(form, newFiles, onProgress);
+        await createProduct(form, gallery, onProgress);
         toast(`${form.name} is now ${form.status === "draft" ? "saved as a draft" : "live in the shop"}`);
       }
       reset();
@@ -159,7 +163,7 @@ export default function ProductForm({ editing, onDone }) {
         <div>
           <h2 className="title-sm">{editing ? `Edit ${editing.name}` : "Add a product"}</h2>
           <p className="muted" style={{ fontSize: 15, marginTop: 4 }}>
-            Upload every angle at once. The first image becomes the cover.
+            Upload every angle at once, and add more any time. The first photo is the cover.
           </p>
         </div>
         {editing && (
@@ -182,7 +186,7 @@ export default function ProductForm({ editing, onDone }) {
             onDrop={onDrop}
           >
             <Icon name="upload" size={40} strokeWidth={1.4} className="gold-icon" />
-            <span className="dropzone__title">Drop images here</span>
+            <span className="dropzone__title">{gallery.length ? "Add more photos" : "Drop images here"}</span>
             <span className="muted" style={{ fontSize: 14 }}>
               or click to choose several · JPG, PNG, WEBP · up to {MAX_IMAGES_PER_PRODUCT} images, {MAX_IMAGE_MB}MB each
             </span>
@@ -202,20 +206,29 @@ export default function ProductForm({ editing, onDone }) {
           {gallery.length > 0 && (
             <ul className="thumbs">
               {gallery.map((g, i) => {
-                const pct = g.kind === "new" ? progress[files.indexOf(g.f)] : undefined;
+                const pct = g.file ? progress[g.key] : undefined;
                 return (
-                  <li key={g.src} className="thumb" style={{ animationDelay: `${i * 0.05}s` }}>
-                    <img src={g.src} alt={`Product image ${i + 1}`} />
+                  <li key={g.key} className="thumb" style={{ animationDelay: `${Math.min(i, 10) * 0.04}s` }}>
+                    <img src={g.image?.url || g.preview} alt={`Product photo ${i + 1}`} />
                     {i === 0 ? (
                       <span className="thumb__cover">Cover</span>
                     ) : (
-                      <button type="button" className="thumb__make-cover" onClick={() => makeCover(i)}>
+                      <button type="button" className="thumb__make-cover" onClick={() => move(i, 0)} disabled={busy}>
                         Make cover
                       </button>
                     )}
-                    <button type="button" className="thumb__remove" aria-label={`Remove image ${i + 1}`} onClick={() => removeAt(i)} disabled={busy}>
-                      <Icon name="close" size={14} strokeWidth={2.4} />
+                    {g.file && !busy && <span className="thumb__new">New</span>}
+                    <button type="button" className="thumb__remove" aria-label={`Remove photo ${i + 1}`} onClick={() => removeAt(i)} disabled={busy}>
+                      <Icon name="trash" size={14} strokeWidth={2} />
                     </button>
+                    <span className="thumb__moves">
+                      <button type="button" aria-label={`Move photo ${i + 1} left`} onClick={() => move(i, i - 1)} disabled={busy || i === 0}>
+                        <Icon name="arrow-left" size={14} strokeWidth={2} />
+                      </button>
+                      <button type="button" aria-label={`Move photo ${i + 1} right`} onClick={() => move(i, i + 1)} disabled={busy || i === gallery.length - 1}>
+                        <Icon name="arrow-right" size={14} strokeWidth={2} />
+                      </button>
+                    </span>
                     {busy && pct !== undefined && (
                       <span className="thumb__progress">
                         <span style={{ width: `${pct}%` }} />
@@ -227,9 +240,21 @@ export default function ProductForm({ editing, onDone }) {
             </ul>
           )}
           <p className="label">
-            {gallery.length} {gallery.length === 1 ? "image" : "images"}
-            {files.length ? ` · ${files.length} to upload` : ""}
+            {gallery.length} {gallery.length === 1 ? "photo" : "photos"}
+            {newCount ? ` · ${newCount} to upload` : ""}
           </p>
+          {removed.length > 0 && (
+            <p className="notice">
+              <Icon name="trash" size={16} />
+              <span>
+                {removed.length} saved photo{removed.length === 1 ? " is" : "s are"} marked for deletion and will be removed from storage when
+                you save.{" "}
+                <button type="button" className="link-btn" onClick={undoRemove} disabled={busy}>
+                  Undo
+                </button>
+              </span>
+            </p>
+          )}
         </div>
 
         <div className="product-form__fields">
@@ -290,7 +315,7 @@ export default function ProductForm({ editing, onDone }) {
             </label>
           </div>
           <button type="submit" className="btn btn--dark btn--block" style={{ marginTop: 24 }} disabled={busy}>
-            {busy ? (files.length ? "Uploading images…" : "Saving…") : editing ? "Save changes" : form.status === "draft" ? "Save draft" : "Publish product"}
+            {busy ? (newCount ? "Uploading photos…" : "Saving…") : editing ? "Save changes" : form.status === "draft" ? "Save draft" : "Publish product"}
           </button>
         </div>
       </form>

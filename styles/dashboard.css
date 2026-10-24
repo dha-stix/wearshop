@@ -1041,3 +1041,156 @@
   line-height: 1.6;
   word-break: break-word;
 }
+
+/* ---------- Team ---------- */
+.team {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.team__row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 28px;
+  border-top: 1px solid var(--ivory-2);
+}
+.team__row:first-child {
+  border-top: 0;
+}
+.team__avatar {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  color: var(--gold);
+}
+.team__who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.team__who strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.team__who .muted {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.team__meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+}
+.team__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.thumb__new {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  padding: 2px 6px;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.thumb__moves {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.thumb:hover .thumb__moves,
+.thumb:focus-within .thumb__moves {
+  opacity: 1;
+}
+.thumb__moves button {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+}
+.thumb__moves button:disabled {
+  opacity: 0.35;
+}
+@media (hover: none) {
+  .thumb__moves,
+  .thumb__make-cover {
+    opacity: 1;
+  }
+}
+.team__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.team__role {
+  width: auto;
+  min-height: 44px;
+}
+.team__roles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.team__roles legend {
+  margin-bottom: 8px;
+}
+.team__choice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border: 1px solid var(--line-3);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.team__choice input {
+  margin-top: 4px;
+  accent-color: var(--ink);
+}
+.team__choice > span {
+  display: flex;
+  flex-direction: column;
+}
+.team__choice .muted {
+  font-size: 14px;
+  line-height: 1.45;
+}
+.team__choice--on {
+  border-color: var(--ink);
+  background: var(--ivory-3);
+}
+@media (max-width: 640px) {
+  .team__row {
+    flex-wrap: wrap;
+  }
+  .team__actions {
+    width: 100%;
+    padding-left: 58px;
+  }
+}

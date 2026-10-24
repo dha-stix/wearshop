@@ -24,7 +24,11 @@ export function AuthProvider({ children }) {
       user,
       profile: user ? profile.data : null,
       loading: user === undefined || !profileReady,
+      role: (user && profile.data?.role) || "customer",
       isManager: Boolean(user && profile.data?.role === "manager"),
+      isStaff: Boolean(user && profile.data?.role === "staff"),
+      // Staff and managers both work on orders.
+      isStoreTeam: Boolean(user && ["manager", "staff"].includes(profile.data?.role)),
       signIn: signInWithGoogle,
       signOut: signOutUser,
     }),

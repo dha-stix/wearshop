@@ -42,15 +42,27 @@ function RestockControl({ product }) {
   );
 }
 
+// Product cell: a link to edit (managers) or to the shop page (staff); plain text for staff on drafts.
+function ProductName({ href, children }) {
+  return href ? (
+    <Link href={href} className="inv-product">
+      {children}
+    </Link>
+  ) : (
+    <span className="inv-product">{children}</span>
+  );
+}
+
 // Stock and sales per product, with quick restock, edit and delete. `rows` is the current page.
-export default function InventoryTable({ rows, sales, meterMax }) {
+// readOnly (staff): no sales figures and no actions.
+export default function InventoryTable({ rows, sales, meterMax, readOnly = false }) {
   const toast = useToast();
 
   const remove = async (product) => {
     if (!window.confirm(`Delete ${product.name}? Its photos will be removed too. Orders that include it are kept.`)) return;
     try {
-      await deleteProduct(product);
-      toast(`${product.name} deleted`);
+      const photos = await deleteProduct(product);
+      toast(`${product.name} deleted with ${photos} photo${photos === 1 ? "" : "s"}`);
     } catch (err) {
       toast(err.message, "error");
     }
@@ -58,23 +70,29 @@ export default function InventoryTable({ rows, sales, meterMax }) {
 
   return (
     <div className="table-wrap">
-      <table className="table" style={{ minWidth: 900 }}>
+      <table className="table" style={{ minWidth: readOnly ? 620 : 900 }}>
         <thead>
           <tr>
             <th scope="col">Product</th>
             <th scope="col">Price</th>
-            <th scope="col" className="num">
-              Sold
-            </th>
-            <th scope="col" className="num">
-              Revenue
-            </th>
+            {!readOnly && (
+              <>
+                <th scope="col" className="num">
+                  Sold
+                </th>
+                <th scope="col" className="num">
+                  Revenue
+                </th>
+              </>
+            )}
             <th scope="col" style={{ width: 200 }}>
               Stock left
             </th>
-            <th scope="col">
-              <span className="sr-only">Actions</span>
-            </th>
+            {!readOnly && (
+              <th scope="col">
+                <span className="sr-only">Actions</span>
+              </th>
+            )}
           </tr>
         </thead>
         <tbody>
@@ -85,7 +103,7 @@ export default function InventoryTable({ rows, sales, meterMax }) {
             return (
               <tr key={p.id}>
                 <td>
-                  <Link href={`/dashboard/products/${p.id}`} className="inv-product">
+                  <ProductName product={p} href={readOnly ? (p.status === "live" ? `/shop/${p.id}` : null) : `/dashboard/products/${p.id}`}>
                     <span className="inv-product__thumb">
                       <ProductVisual product={p} sizes="44px" animated={false} watchWidth="50%" />
                     </span>
@@ -96,11 +114,15 @@ export default function InventoryTable({ rows, sales, meterMax }) {
                         {p.status === "draft" && " · Draft"}
                       </span>
                     </span>
-                  </Link>
+                  </ProductName>
                 </td>
                 <td className="mono">{formatMoney(p.price)}</td>
-                <td className="num">{sale.units}</td>
-                <td className="num">{formatMoney(sale.revenue)}</td>
+                {!readOnly && (
+                  <>
+                    <td className="num">{sale.units}</td>
+                    <td className="num">{formatMoney(sale.revenue)}</td>
+                  </>
+                )}
                 <td>
                   <div className="meter">
                     <div className="meter__track">
@@ -115,6 +137,7 @@ export default function InventoryTable({ rows, sales, meterMax }) {
                     </div>
                   )}
                 </td>
+                {!readOnly && (
                 <td>
                   <div className="inv-actions">
                     <RestockControl product={p} />
@@ -126,6 +149,7 @@ export default function InventoryTable({ rows, sales, meterMax }) {
                     </button>
                   </div>
                 </td>
+                )}
               </tr>
             );
           })}

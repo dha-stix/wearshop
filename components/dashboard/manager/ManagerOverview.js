@@ -7,6 +7,7 @@ import ProductVisual from "@/components/ui/ProductVisual";
 import { PageLoading } from "@/components/ui/States";
 import StatusBadge from "@/components/orders/StatusBadge";
 import { formatDate, formatMoney, LOW_STOCK_THRESHOLD } from "@/lib/config";
+import { useAuth } from "@/components/providers/AuthProvider";
 import { DashHeader, Stat } from "../DashboardShell";
 import RevenuePanel from "./RevenuePanel";
 import { buildSeries, RANGES } from "./revenue";
@@ -15,7 +16,9 @@ import { useManagerData } from "./ManagerData";
 const PREVIEW = 5;
 
 // Store at a glance: money in, what needs doing now, and where to go next.
+// Staff get the same page without revenue, sales or product editing.
 export default function ManagerOverview() {
+  const { isManager } = useAuth();
   const { orders, products, sales, needsUpdate, loading, error } = useManagerData();
   const [range, setRange] = useState("6M");
   const series = useMemo(() => buildSeries(orders, range), [orders, range]);
@@ -39,13 +42,15 @@ export default function ManagerOverview() {
   return (
     <>
       <DashHeader
-        eyebrow="Store management"
+        eyebrow={isManager ? "Store management" : "Staff desk"}
         title="The"
         accent="vault room"
         actions={
-          <Link href="/dashboard/products/new" className="btn btn--dark btn--sm">
-            <Icon name="plus" size={16} strokeWidth={2} /> Add product
-          </Link>
+          isManager && (
+            <Link href="/dashboard/products/new" className="btn btn--dark btn--sm">
+              <Icon name="plus" size={16} strokeWidth={2} /> Add product
+            </Link>
+          )
         }
       />
       {error && (
@@ -55,20 +60,28 @@ export default function ManagerOverview() {
       )}
 
       <div className="stats" style={{ marginTop: 32 }}>
-        <Stat
-          dark
-          label={`Revenue sold · ${isMonths ? current.fullLabel : RANGES[range].label}`}
-          value={formatMoney(periodRevenue)}
-          note={change === null ? "Confirmed payments" : `${change >= 0 ? "+" : ""}${change}% vs ${previous.label}`}
-        />
-        <Stat label="Watches sold" value={periodUnits} note={isMonths ? "This month" : "Last 7 days"} />
+        {isManager ? (
+          <>
+            <Stat
+              dark
+              label={`Revenue sold · ${isMonths ? current.fullLabel : RANGES[range].label}`}
+              value={formatMoney(periodRevenue)}
+              note={change === null ? "Confirmed payments" : `${change >= 0 ? "+" : ""}${change}% vs ${previous.label}`}
+            />
+            <Stat label="Watches sold" value={periodUnits} note={isMonths ? "This month" : "Last 7 days"} />
+          </>
+        ) : (
+          <Stat dark label="Awaiting payment" value={orders.filter((o) => o.status === "pending_payment").length} note="Not yet paid" />
+        )}
         <Stat label="Orders to update" value={needsUpdate.length} note="Paid, not yet delivered" />
         <Stat label="Low stock" value={lowStock.length} note={`${LOW_STOCK_THRESHOLD} or fewer left`} danger={lowStock.length > 0} />
       </div>
 
-      <div style={{ marginTop: 24 }}>
-        <RevenuePanel series={series} range={range} setRange={setRange} />
-      </div>
+      {isManager && (
+        <div style={{ marginTop: 24 }}>
+          <RevenuePanel series={series} range={range} setRange={setRange} />
+        </div>
+      )}
 
       <div className="overview-grid">
         <section className="panel" aria-label="Orders to update">
@@ -104,7 +117,7 @@ export default function ManagerOverview() {
           <div className="panel__head">
             <h2 className="title-sm">Low stock</h2>
             <Link href="/dashboard/products?stock=low" className="link-btn">
-              Restock →
+              {isManager ? "Restock →" : "View →"}
             </Link>
           </div>
           {lowStock.length === 0 ? (
@@ -113,7 +126,7 @@ export default function ManagerOverview() {
             <ul className="mini-list">
               {lowStock.slice(0, PREVIEW).map((p) => (
                 <li key={p.id}>
-                  <Link href={`/dashboard/products/${p.id}`} className="mini-list__row">
+                  <Link href={isManager ? `/dashboard/products/${p.id}` : "/dashboard/products?stock=low"} className="mini-list__row">
                     <span className="inv-product__thumb">
                       <ProductVisual product={p} sizes="44px" animated={false} watchWidth="50%" />
                     </span>
@@ -128,6 +141,7 @@ export default function ManagerOverview() {
           )}
         </section>
 
+        {isManager && (
         <section className="panel" aria-label="Top sellers">
           <div className="panel__head">
             <h2 className="title-sm">Top sellers</h2>
@@ -156,6 +170,7 @@ export default function ManagerOverview() {
             </ul>
           )}
         </section>
+        )}
       </div>
     </>
   );
