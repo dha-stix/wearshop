@@ -3,7 +3,7 @@ import RequireAuth from "@/components/auth/RequireAuth";
 import DashboardLayout from "@/components/dashboard/DashboardLayout";
 import { PageLoading } from "@/components/ui/States";
 
-export const metadata = { title: { default: "Dashboard", template: "%s · Dashboard · WearShop" } };
+export const metadata = { title: { default: "Dashboard", template: "%s · Dashboard · WearShop" }, robots: { index: false } };
 
 export default function Layout({ children }) {
   return (

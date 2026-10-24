@@ -20,12 +20,28 @@ const barlowCondensed = Barlow_Condensed({ subsets: ["latin"], weight: ["500", "
 const bodoni = Bodoni_Moda({ subsets: ["latin"], style: ["italic"], weight: ["500"], variable: "--font-bodoni" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-jetbrains" });
 
+const DESCRIPTION =
+  "Curated automatic, chronograph, diver and dress watches for men. Pay securely in Naira with Bachs and track every step of delivery.";
+
+// Site-wide link-preview tags. Every page inherits these; app/opengraph-image.js supplies the default
+// preview picture, and product pages override title, description and image with their own.
 export const metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: "WearShop",
   title: { default: "WearShop — Luxury wristwatches", template: "%s · WearShop" },
-  description: "Curated automatic, chronograph, diver and dress watches. Pay securely with Bachs and track every step of delivery.",
-  openGraph: { title: "WearShop — Luxury wristwatches", type: "website", siteName: "WearShop" },
-  icons: { icon: logoMark.src },
+  description: DESCRIPTION,
+  keywords: ["luxury watches", "wristwatches", "men's watches", "automatic watch", "chronograph", "diver watch", "Nigeria", "WearShop"],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: "WearShop",
+    locale: "en_NG",
+    url: "/",
+    title: "WearShop — Luxury wristwatches",
+    description: DESCRIPTION,
+  },
+  twitter: { card: "summary_large_image", title: "WearShop — Luxury wristwatches", description: DESCRIPTION },
+  icons: { icon: logoMark.src, apple: logoMark.src },
 };
 
 export const viewport = {
