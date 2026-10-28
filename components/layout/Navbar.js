@@ -3,12 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import Logo from "@/components/ui/Logo";
 import Icon from "@/components/ui/Icon";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useCart } from "@/components/providers/CartProvider";
 import NotificationBell from "@/components/orders/NotificationBell";
+
+const noopSubscribe = () => () => {};
 
 const LINKS = [
   { href: "/shop", label: "Shop" },
@@ -23,6 +26,9 @@ export default function Navbar() {
   const { count } = useCart();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // The drawer is portalled to <body> once we're in the browser (see below).
+  const inBrowser = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  const close = () => setOpen(false);
 
   // Close the mobile menu whenever the page changes.
   const [shownPath, setShownPath] = useState(pathname);
@@ -87,43 +93,61 @@ export default function Navbar() {
         </div>
       </nav>
 
-      <div className={`drawer ${open ? "drawer--open" : ""}`} aria-hidden={!open}>
-        <button type="button" className="drawer__scrim" tabIndex={-1} aria-label="Close menu" onClick={() => setOpen(false)} />
-        <div className="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
-          <div className="drawer__head">
-            <Logo dark size={22} />
-            <button type="button" className="icon-btn" aria-label="Close menu" onClick={() => setOpen(false)} tabIndex={open ? 0 : -1}>
-              <Icon name="close" size={22} />
-            </button>
-          </div>
-          <div className="drawer__links">
-            {LINKS.map((l, i) => (
-              <Link key={l.href} href={l.href} style={{ "--i": i }} tabIndex={open ? 0 : -1}>
-                {l.label}
-              </Link>
-            ))}
-            <Link href="/cart" style={{ "--i": LINKS.length }} tabIndex={open ? 0 : -1}>
-              Cart ({count})
+      {/* Rendered at <body> level: on iOS Safari and Android Chrome the navbar's backdrop-filter turns
+          it into the containing block for fixed children, which squeezed the full-screen menu into
+          the 68px header strip. */}
+      {inBrowser && createPortal(<MobileMenu open={open} close={close} count={count} user={user} signOut={signOut} />, document.body)}
+    </header>
+  );
+}
+
+function MobileMenu({ open, close, count, user, signOut }) {
+  const tab = open ? 0 : -1;
+  return (
+    <div className={`drawer ${open ? "drawer--open" : ""}`} aria-hidden={!open}>
+      <button type="button" className="drawer__scrim" tabIndex={-1} aria-label="Close menu" onClick={close} />
+      <div className="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div className="drawer__head">
+          <Logo dark size={22} />
+          <button type="button" className="icon-btn" aria-label="Close menu" onClick={close} tabIndex={tab}>
+            <Icon name="close" size={22} />
+          </button>
+        </div>
+        <nav className="drawer__links" aria-label="Mobile">
+          {LINKS.map((l, i) => (
+            <Link key={l.href} href={l.href} style={{ "--i": i }} tabIndex={tab} onClick={close}>
+              {l.label}
             </Link>
-          </div>
-          <div className="drawer__foot">
-            {user ? (
-              <>
-                <Link href="/dashboard" className="btn btn--gold btn--block" tabIndex={open ? 0 : -1}>
-                  My dashboard
-                </Link>
-                <button type="button" className="btn btn--outline-gold btn--block" onClick={signOut} tabIndex={open ? 0 : -1}>
-                  Sign out
-                </button>
-              </>
-            ) : (
-              <Link href="/auth/login" className="btn btn--gold btn--block" tabIndex={open ? 0 : -1}>
-                Sign in with Google
+          ))}
+          <Link href="/cart" style={{ "--i": LINKS.length }} tabIndex={tab} onClick={close}>
+            Cart ({count})
+          </Link>
+        </nav>
+        <div className="drawer__foot">
+          {user ? (
+            <>
+              <Link href="/dashboard" className="btn btn--gold btn--block" tabIndex={tab} onClick={close}>
+                My dashboard
               </Link>
-            )}
-          </div>
+              <button
+                type="button"
+                className="btn btn--outline-gold btn--block"
+                onClick={() => {
+                  close();
+                  signOut();
+                }}
+                tabIndex={tab}
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <Link href="/auth/login" className="btn btn--gold btn--block" tabIndex={tab} onClick={close}>
+              Sign in with Google
+            </Link>
+          )}
         </div>
       </div>
-    </header>
+    </div>
   );
 }

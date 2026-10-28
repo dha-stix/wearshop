@@ -134,8 +134,10 @@
 .drawer {
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: 120;
   pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s 0.5s;
 }
 .drawer__scrim {
   position: absolute;
@@ -145,12 +147,15 @@
   opacity: 0;
   transition: opacity 0.4s;
 }
+/* Slides in from the right edge, leaving a strip of the dimmed page visible on phones. */
 .drawer__panel {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  width: min(420px, 100%);
+  width: min(400px, 86vw);
+  overflow-y: auto;
+  box-shadow: -30px 0 60px rgba(0, 0, 0, 0.35);
   display: flex;
   flex-direction: column;
   background: var(--black);
@@ -160,6 +165,8 @@
 }
 .drawer--open {
   pointer-events: auto;
+  visibility: visible;
+  transition: visibility 0s;
 }
 .drawer--open .drawer__scrim {
   opacity: 1;
